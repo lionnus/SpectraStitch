@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Visualizer</title>
+</head>
+<body>
+
+<form action="/process" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" required>
+    <input type="range" name="x_dim" min="1" max="500" value="100">
+    <input type="range" name="y_dim" min="1" max="500" value="100">
+    <input type="range" name="y_scale" min="1" max="10" value="2">
+    <input type="color" name="hex_start" value="#000000">
+    <input type="color" name="hex_end" value="#FFFFFF">
+    <input type="range" name="pdf_resolution" min="100" max="600" value="300">
+    <input type="text" name="text" placeholder="Enter text">
+    <input type="color" name="text_color" value="#FFFFFF">
+    <input type="range" name="text_width_percent" min="10" max="100" value="80">
+    <button type="submit">Generate</button>
+</form>
+
+</body>
+</html>
