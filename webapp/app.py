@@ -1,12 +1,23 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, jsonify
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
-import io
+import matplotlib
+matplotlib.use('Agg')
+import os
+import uuid
 import textwrap
 
+
 app = Flask(__name__)
+
+# Set a directory to save generated images
+UPLOAD_FOLDER = 'static/generated'
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def load_audio(file):
     y, sr = librosa.load(file, sr=None)
@@ -69,10 +80,18 @@ def index():
 
 @app.route('/process', methods=['POST'])
 def process_audio():
+    # Check if file was uploaded
+    if 'file' not in request.files:
+        return 'No file part', 400
+
     MUSIC_FILE_NAME = request.files['file']
+
+    if MUSIC_FILE_NAME.filename == '':
+        return 'No selected file', 400
+    
     X_DIM = int(request.form['x_dim'])
-    Y_DIM = int(request.form['y_dim'])
     Y_SCALE = int(request.form['y_scale'])
+    Y_DIM = int(X_DIM//Y_SCALE)
     HEX_START = request.form['hex_start']
     HEX_END = request.form['hex_end']
     PDF_RESOLUTION = int(request.form['pdf_resolution'])
@@ -80,6 +99,7 @@ def process_audio():
     text_color = request.form['text_color']
     text_width_percent = int(request.form['text_width_percent'])
 
+    
     y, sr = load_audio(MUSIC_FILE_NAME)
     dft_slices = compute_dft_slices(y, sr, X_DIM, Y_DIM)
     colors = map_to_color(dft_slices, HEX_START, HEX_END)
@@ -91,13 +111,18 @@ def process_audio():
 
     image_dim = image.shape
     add_text_to_image(ax, image_dim, text, text_color, text_width_percent)
-    
-    output = io.BytesIO()
-    plt.savefig(output, format='PNG', dpi=PDF_RESOLUTION)
+    # Turn off the axis
+    plt.axis('off')
+    # Ensure a tight layout
+    plt.tight_layout()
+    # Save the generated image with a unique filename
+    filename = str(uuid.uuid4()) + ".png"
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    plt.savefig(filepath,bbox_inches='tight', pad_inches=0, dpi=PDF_RESOLUTION)
     plt.close(fig)
-    output.seek(0)
 
-    return send_file(output, mimetype='image/png')
+    # Return the generated image's URL
+    return jsonify({"image_url": '/' + filepath})
 
 if __name__ == '__main__':
     app.run(debug=True)
