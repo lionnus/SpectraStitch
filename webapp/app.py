@@ -94,7 +94,7 @@ def process_audio():
     Y_DIM = int(X_DIM//Y_SCALE)
     HEX_START = request.form['hex_start']
     HEX_END = request.form['hex_end']
-    PDF_RESOLUTION = int(request.form['pdf_resolution'])
+    PDF_RESOLUTION = 300
     text = request.form['text']
     text_color = request.form['text_color']
     text_width_percent = int(request.form['text_width_percent'])
