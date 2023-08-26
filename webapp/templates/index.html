@@ -6,39 +6,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Visualizer</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-
     <style>
+        /* General Settings */
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Header Section */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height:80px;
+            z-index:99;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #fff;
+            color: #000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
+        .header .logo img {
+            max-height: 60px;
+            width: auto;
+        }
+        
+        .header nav ul {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+        }
+        
+        .header nav ul li {
+            display: inline;
+        }
+        
+        .header nav ul li a {
+            text-decoration: none;
+            color: #ff6c27;
+            transition: color 0.3s;
+        }
+        
+        .header nav ul li a:hover {
+            color: #ff9c34;
+        }
+        /* Body */
+        body {
+            padding-top: 100px;
+        }
+        /* Info Bar */
+        .info-bar {
+            background-color: #eee;
+            padding: 10px 40px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        /* Main Content Area */
+        /* Make content within split appear side to side*/
         .split {
             display: flex;
-            height: 100vh;
-            align-items: center;
-            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0px 0px;
         }
-
-        .left,
+        
+        .left {
+            width: 50%;
+            min-height: 60vh;
+            background-color: rgb(255, 255, 255);
+            margin-bottom: 16px;
+            padding: 20px 40px;
+        }
+        
         .right {
-            flex: 50%;
-            padding: 40px;
-            box-sizing: border-box;
-            background: white;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            width: 40%;
+            background-color: #fff7db;
+            margin-bottom: 16px;
+            padding: 20px 40px;
         }
 
+        /*Display the columns below each other instead of side by side on small screens */
+        @media screen and (max-width: 650px) {
+            .left,
+            .right {
+            width: 100%;
+            display: block;
+            min-height: 80vh;
+            background-color: rgb(255, 255, 255);
+            margin-bottom: 16px;
+            padding: 20px 40px;
+            }
+        }
+        
         .title {
             font-weight: 500;
             margin-bottom: 20px;
         }
-
+        
         .subtitle {
             font-weight: 300;
             margin-bottom: 10px;
         }
-
+        
         form input[type="file"],
         form button {
             width: 100%;
@@ -47,85 +123,174 @@
             border: none;
             border-radius: 5px;
         }
-
+        
         form button {
-            background-color: #333;
+            background-color: #ff6c27;
             color: #fff;
             cursor: pointer;
         }
-
+        
         form button:hover {
-            background-color: #555;
+            background-color: #ff9c34;
         }
-
-        .spinner img {
-            max-width: 30px;
-            display: block;
-            margin: 20px auto;
-        }
-
-        .image-container {
+        
+        /* Image & Slideshow Section */
+        
+        .slideshow-container {
             position: relative;
-            width: 100%;
+            height:100vh;
+            max-width: 100%;
             overflow: hidden;
         }
-
-        .image-container img.generated-image {
+        
+        .slide {
+            display: none;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .product-image {
+            position: relative;
+            height: 80vh;
+            -webkit-filter: drop-shadow(5px 5px 5px #666666);
+            filter: drop-shadow(5px 5px 5px #666666);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .generated-image-tote {
             position: absolute;
-            display: none; /* Hide it initially */
+            top: 38vh;
+            left: 16vw;
+            width: 17vw;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .generated-image-full {
+            position: relative;
+            height: 60vh;
+            display: block;
+            margin-top: 40px;
+            margin-left: auto;
+            margin-right: auto;
+            -webkit-filter: drop-shadow(5px 5px 5px #666666);
+            filter: drop-shadow(5px 5px 5px #666666);
         }
 
-        .price {
-            margin-top: 20px;
-            font-weight: 500;
-            font-size: 20px;
+        /* Slideshow Controls */
+        .dots {
+            text-align: center;
+            padding: 10px 0;
         }
+        
+        .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .dot.active {
+            background-color: #717171;
+        }
+        
+        /* Footer Section */
+        footer {
+            background-color: #ff6c27;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        
 
     </style>
 </head>
 
 <body>
-
-    <div class="split">
-        <!-- Left section with controls -->
-        <div class="left">
-            <div class="title">Custom Music Visualizer</div>
-            <p class="subtitle">Personalize your visualizations</p>
-            <form action="/process" method="post" enctype="multipart/form-data" id="audioForm">
-                <input type="file" name="file" required><br>
-                X Dimension: <input type="range" name="x_dim" min="1" max="500" value="100"><br>
-                Y Scale: <input type="range" name="y_scale" min="1" max="10" value="2"><br>
-                Start Color: <input type="color" name="hex_start" value="#000000"><br>
-                End Color: <input type="color" name="hex_end" value="#FFFFFF"><br>
-                PDF Resolution: <input type="range" name="pdf_resolution" min="100" max="600" value="300"><br>
-                Text: <input type="text" name="text" placeholder="Enter text"><br>
-                Text Color: <input type="color" name="text_color" value="#FFFFFF"><br>
-                Text Width (%): <input type="range" name="text_width_percent" min="10" max="100" value="80"><br>
-                <button type="submit">Generate</button>
-            </form>
-
-            <!-- Spinner placeholder -->
-            <div class="spinner" style="display:none;">
-                <img src="static/loading.gif" alt="Loading...">
-            </div>
-        </div>
-
-        <!-- Right section with images -->
-        <div class="right">
-            <div class="title">Preview</div>
-            <div class="image-container">
-                <img src="static/totebag.jpg" alt="Background">
-                <img src="" alt="Generated image" class="generated-image" style="width:30%; top: 440px; left: 83px;">
-            </div>
-            <div class="price">$29.99</div>
+    <!-- Header -->
+    <div class="fixed-header">
+        <div class="header">
+            <div class="logo"><img src="static/logo.png" alt="SpectraStitch Logo" /></div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </nav>
         </div>
     </div>
+    <!-- Info Bar -->
+    <div class="info-bar">Free Shipping over CHF 50</div>
+
+    <div class="split">
+        <!-- Left section with images -->
+        <div class="left">   
+            <div class="title">Preview</div>
+            <!-- Slideshow Container -->
+            <div class="slideshow-container">  
+                 <!-- First View: Tote Bag with Generated Image -->
+                <div class="slide">
+                    <img src="static/totebag.png" alt="Background" class="product-image">
+                    <img src="static/design_placeholder.png" alt="Generated image" class="generated-image-tote" >
+                </div>
+    
+                <!-- Second View: Only Generated Image -->
+                <div class="slide">
+                    <img src="static/design_placeholder.png" alt="Generated image" class="generated-image-full" >
+                    
+                </div>
+            </div>
+    
+            <!-- Slideshow Navigation Buttons -->
+            <div class="dots">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+            </div> 
+        </div>
+        
+        <!-- Right section with controls -->
+        <div class="right">
+             <div class="subtitle">1. Upload your favorite song</div>
+            <form action="/process" method="post" enctype="multipart/form-data" id="audioForm">
+                Upload a song: <input type="file" name="file" required><br>
+                <b>Note: No responsibility is taken for unlawful usage of copyrighted material!</b> <br><br>
+                <div class="subtitle">2. Tweak your custom artwork</div>
+                Blocks per row (10-500): <input type="number" name="x_dim" min="10" max="500" value="100"><br>
+                Height of block (1-10): <input type="number" name="y_scale" min="1" max="10" value="2"><br>
+                Low frequency color: <input type="color" name="hex_start" value="#1059ad"><br>
+                High frequency color: <input type="color" name="hex_end" value="#5c8abf"><br>
+                Song title: <input type="text" name="text" placeholder="Enter text"><br>
+                Text Color: <input type="color" name="text_color" value="#FFFFFF"><br>
+                Text Width (10-100%): <input type="range" name="text_width_percent" min="10" max="100" value="80"><br>
+                <button type="submit">Generate</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        © 2023 SpectraStitch. All rights reserved. | <a href="#" style="color: #ddd; text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: #ddd; text-decoration: none;">Terms of Service</a>
+    </footer>
 
     <!-- Include JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- JavaScript to handle form submission and image display -->
+
+    <!-- JavaScript-->
     <script>
+        // Generate image on form submission
         $(document).ready(function() {
             $('#audioForm').submit(function(e) {
                 e.preventDefault();
@@ -141,7 +306,8 @@
                     data: formData,
                     success: function(data) {
                         var blobURL = URL.createObjectURL(new Blob([data], { type: 'image/png' }));
-                        $('.generated-image').attr('src', data.image_url).show();
+                        $('.generated-image-full').attr('src', data.image_url).show();
+                        $('.generated-image-tote').attr('src', data.image_url).show();
                         $('.spinner').hide();
                     },
                     cache: false,
@@ -154,6 +320,36 @@
                 });
             });
         });
+        // Slideshow JavaScript 
+        var slideIndex = 1;
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("slide");
+            var dots = document.getElementsByClassName("dot");
+        
+            if (n > slides.length) {
+                slideIndex = 1;
+            }  
+            if (n < 1) {
+                slideIndex = slides.length;
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+        }
+        
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+                
+        // Initialize the first slide
+        showSlides(slideIndex);
 
     </script>
 </body>
