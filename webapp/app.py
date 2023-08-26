@@ -3,6 +3,7 @@ import librosa
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+import matplotlib.textpath as textpath
 import matplotlib
 matplotlib.use('Agg')
 import os
@@ -51,28 +52,36 @@ def reshape(colors, X_DIM, Y_DIM, Y_SCALE):
     return np.array(new_image)
 
 def get_text_width(text, fontsize):
-    fig_temp = plt.figure(figsize=(10, 10), dpi=80)
-    ax_temp = fig_temp.add_subplot(111)
-    t = ax_temp.text(0.5, 0.5, text, fontsize=fontsize, visible=True, transform=ax_temp.transAxes)
-    fig_temp.canvas.draw()
-    width = t.get_window_extent().width
-    plt.close(fig_temp)
-    return width
+    """Helper function to get the rendered width of a text for a given font size."""
+    t = textpath.TextPath((0,0), text, size=fontsize)
+    return t.get_extents().width
 
 def add_text_to_image(ax, image_dim, text=None, color='white', text_width_percent=80):
+    """Adds specified text to the image at the center."""
     if text:
         target_width = text_width_percent / 100 * image_dim[1]
-        chars_per_line = len(text) * target_width / image_dim[1]
-        wrapped_text = '\n'.join(textwrap.wrap(text, width=int(chars_per_line)))
-        fontsize = 12
-        text_width = get_text_width(wrapped_text, fontsize)
+        
+        # Initial font size and width estimate
+        fontsize = 1
+        text_width = get_text_width(text, fontsize)
+
+        # Iterative process to adjust font size
         max_iterations = 10
         for _ in range(max_iterations):
+            # Adjust font size proportionally
             fontsize *= target_width / text_width
-            text_width = get_text_width(wrapped_text, fontsize)
+            text_width = get_text_width(text, fontsize)/2
+            # Print all variables for debugging
+            print(f"fontsize: {fontsize}, text_width: {text_width}, target_width: {target_width}")
+            # Stop if the text width is within the target width
+            # if text_width >= target_width:
+            #     break
+
+        # Draw the final text
         center_x = image_dim[1] / 2
         center_y = image_dim[0] / 2
-        ax.text(center_x, center_y, wrapped_text, color=color, fontweight='bold', fontsize=fontsize, ha='center', va='center')
+        ax.text(center_x, center_y, text, color=color, fontweight='bold',
+                fontsize=fontsize, ha='center', va='center')
 
 @app.route('/')
 def index():
