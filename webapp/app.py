@@ -82,8 +82,8 @@ def add_text_to_image(ax, image_dim, text=None, color='white', text_width_percen
             # Print all variables for debugging
             print(f"fontsize: {fontsize}, text_width: {text_width}, target_width: {target_width}")
             # Stop if the text width is within the target width
-            # if text_width >= target_width:
-            #     break
+            if text_width >= 0.95*target_width and text_width <= 1.05*target_width:
+                break
 
         # Draw the final text
         center_x = image_dim[1] / 2
@@ -99,6 +99,10 @@ def generate_image_from_dft(dft_slices, X_DIM, Y_DIM, Y_SCALE, HEX_START, HEX_EN
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/customize')
+def customize():
+    return render_template('customize.html')
 
 
 @app.route('/process', methods=['POST'])
