@@ -99,7 +99,7 @@
 }
 .sample-totebag{
     position: absolute;
-    top: 43vh; 
+    top: 45vh; 
     width: 13vw;
     left: 50%; /* Horizontally centering the image */
     transform: translateX(-50%); /* Horizontally centering the image */

@@ -2,7 +2,11 @@
 
 SpectraStitch is a Flask web application that processes audio files and generates a visual representation based on the Discrete Fourier Transform (DFT) of audio slices. The visualization reflects frequency distribution and can be customized in terms of dimensions, color gradient, and more. Additionally, the artist names and song titles can be overlayed onto the generated image.
 
-<img src="Design/preview.png" alt="Preview of the webinterface" width="1000px"/>
+<img src="Design/screenshot_1.png" alt="Preview 1 of the webinterface" width="1000px"/>
+<img src="Design/screenshot_4.png" alt="Preview 4 of the webinterface" width="1000px"/>
+<img src="Design/screenshot_2.png" alt="Preview 2 of the webinterface" width="1000px"/>
+<img src="Design/screenshot_3.png" alt="Preview 3 of the webinterface" width="1000px"/>
+
 
 ## Features
 ### Back-end:
