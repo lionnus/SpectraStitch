@@ -31,8 +31,8 @@
                 <img src="static/design_placeholder.png" alt="Sample design" class="sample-totebag"/>
             </div>
             <div class="right">
-                <h2>This is</h2>
-                <h1>SpectraStitch</h1>
+                <div class="introSmall">This is</div>
+                <div class="introBig">SpectraStitch</div>
             </div>
         </div>
         <div class="video-background">
@@ -43,6 +43,33 @@
             ></iframe>
         </div>
     </section>
+
+    <section class="custom-designs">
+        <h2>Custom designs for every song imaginable</h2>
+        <div class="designs-container">
+            <img src="static/design_placeholder.png" alt="Custom Design 1">
+            <img src="static/design_placeholder.png" alt="Custom Design 2">
+            <img src="static/design_placeholder.png" alt="Custom Design 3">
+            <img src="static/design_placeholder.png" alt="Custom Design 4">
+        </div>
+    </section>
+    
+    <section class="go-to-customizer">
+        <div class="background">
+            <img src="static/sample-mockup.png" alt="Sample bag"/>
+        </div>
+        <div class="content-wrapper">
+            <h2>Ready to make your own?</h2>
+            <a href="{{ url_for('customize') }}"><button>Customize</button></a>
+        </div>
+    </section>
+    
+    
+
+    <!-- Footer -->
+    <footer>
+        © 2023 SpectraStitch. All rights reserved. | <a href="#" style="color: #ddd; text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: #ddd; text-decoration: none;">Terms of Service</a>
+    </footer>
 
 </body>
 </html>

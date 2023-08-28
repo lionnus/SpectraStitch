@@ -53,7 +53,6 @@
     object-fit: cover; /* Maintain video aspect ratio while covering the container */
 }
 
-
 /*Display the columns below each other instead of side by side on small screens */
 @media screen and (max-width: 650px) {
     .left,
@@ -67,25 +66,26 @@
     }
 }
 
-
-h2 {
+.introSmall{
     font-size: 48px;
-    margin: 0;
-    padding: 0;
     color: #fff;
     font-weight: 200;
     -webkit-filter: drop-shadow(0 0 10px #00000064);
     filter: drop-shadow(0 0 10px #00000077);
   }
   
-h1 {
+.introBig {
     font-size: 100px;
-    margin: 0;
-    padding: 0;
     font-weight: 500;
     color: #fff;
     -webkit-filter: drop-shadow(0 0 30px #00000064);
     filter: drop-shadow(0 0 30px #00000077);
+  }
+
+  h2{
+    font-size: 36px;
+    color: #000000;
+    font-weight: 200;
   }
 
 .totebag {
@@ -103,4 +103,84 @@ h1 {
     width: 13vw;
     left: 50%; /* Horizontally centering the image */
     transform: translateX(-50%); /* Horizontally centering the image */
+}
+
+.custom-designs {
+    background-color: white;
+    padding: 20px 40px 40px 40px;
+    text-align: center;  /* Center the title */
+}
+
+.designs-container {
+    display: flex;       /* Align images horizontally */
+    justify-content: center;  /* Center the images in the container */
+    gap: 50px;          /* Spacing between images */
+}
+
+.designs-container img {
+    width: calc(25% - 50px);   /* Distribute the width among the 4 images, accounting for the gap */
+    height: auto;
+}
+
+.go-to-customizer {
+    position: relative; /* Make this the reference for the absolutely positioned background */
+    height: 20vh;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px;
+    text-align: center;
+}
+
+.content-wrapper {
+    position: relative;
+    height: 100%;
+    z-index: 1; /* Ensure content is above the background image */
+    display: flex;
+    justify-content:center; /* Center children horizontally */
+    align-items: center;     /* Center children vertically */
+    max-width: 800px; 
+    margin: 0 auto; 
+}
+.go-to-customizer h2 {
+    font-size: 36px;
+    margin-right: 20px; /* Optional: Adds a space between the title and the button */
+}
+
+.go-to-customizer button {
+    background-color:#ff6c27; /* A placeholder color, adjust as needed */
+    color: white;
+    border: none;
+    padding: 20px 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Adds a smooth color transition effect */
+}
+
+.go-to-customizer button:hover {
+    background-color: #ff9c34; /* Darkens the button on hover for a subtle interaction effect */
+}
+
+.background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 204, 179, 0.838); /* Black overlay with 30% opacity */
+    z-index: 1; /* Ensure the overlay is above the image */
+}
+.background {
+    position: absolute;
+    top: 0;
+    left: 0; /* Ensure it starts from the very left */
+    width: 100%;
+    height: 100%; /* Make it cover the whole section */
+    z-index: 0; /* Make sure it's behind the content */
+}
+
+.background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This will ensure your image covers the entire container without distorting */
 }

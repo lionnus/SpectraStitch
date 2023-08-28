@@ -86,8 +86,7 @@ input[type="text"],
 input[type="range"] {
     width: 100%;
     padding: 10px;
-    border: 1px solid #DDD;
-    border-radius: 4px;
+    border: none;
     margin: 5px 0;
     box-sizing: border-box;
     outline: none;
@@ -114,8 +113,7 @@ input[type="file"] {
     display: inline-block;
     padding: 10px;
     background-color: #ffd4a7; /* light gray */
-    border: 1px solid #DDD;
-    border-radius: 4px;
+    border: none;
     width: 100%;
     text-align: center;
     box-sizing: border-box;
@@ -132,7 +130,6 @@ button {
     background-color: #ff9c34;
     color: white;
     border: none;
-    border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
