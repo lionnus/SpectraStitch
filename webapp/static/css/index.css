@@ -1,0 +1,106 @@
+/* Make content within split appear side to side*/
+.split {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0px 0px;
+    margin: 0px 0px;
+    height:100vh;
+}
+
+.left {
+    position: relative;
+    width: 50%;
+    min-height: 40vh;
+    margin-bottom: 16px;
+    padding: 20px 40px;
+}
+
+
+.right {
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center children horizontally */
+    align-items: center;     /* Center children vertically */
+    width: 50%;
+    padding: 30px 90px 30px 10px;
+}
+.left, .right {
+    box-sizing: border-box;
+}
+/* Add a background image to the section */
+.video-section {
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(255, 203, 168, 0.635); /* White overlay */
+}
+
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none; /* Allow interaction with content above */
+    overflow: hidden;
+}
+
+.video-background iframe {
+    width: 150%;
+    height: 150%;
+    margin: -180px -180px;
+    object-fit: cover; /* Maintain video aspect ratio while covering the container */
+}
+
+
+/*Display the columns below each other instead of side by side on small screens */
+@media screen and (max-width: 650px) {
+    .left,
+    .right {
+    width: 100%;
+    display: block;
+    min-height: 80vh;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 16px;
+    padding: 20px 40px;
+    }
+}
+
+
+h2 {
+    font-size: 48px;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-weight: 200;
+    -webkit-filter: drop-shadow(0 0 10px #00000064);
+    filter: drop-shadow(0 0 10px #00000077);
+  }
+  
+h1 {
+    font-size: 100px;
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+    color: #fff;
+    -webkit-filter: drop-shadow(0 0 30px #00000064);
+    filter: drop-shadow(0 0 30px #00000077);
+  }
+
+.totebag {
+    position: absolute;
+    height: 80vh;
+    width: auto; /* ensure it doesn't stretch */
+    left: 50%; /* Horizontally centering the image */
+    transform: translateX(-50%); /* Horizontally centering the image */
+    -webkit-filter: drop-shadow(-10px 10px 75px #00000064);
+    filter: drop-shadow(-10px 10px 75px #00000077);
+}
+.sample-totebag{
+    position: absolute;
+    top: 43vh; 
+    width: 13vw;
+    left: 50%; /* Horizontally centering the image */
+    transform: translateX(-50%); /* Horizontally centering the image */
+}

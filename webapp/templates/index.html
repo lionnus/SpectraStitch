@@ -5,12 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpectraStitch</title>
     <!-- Linking the CSS file -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <!-- Linking the JavaScript file -->
+    <script></script>
 </head>
 <body>
-    <a href="{{ url_for('customize') }}">Customize</a>
+    <!-- Header -->
+    <div class="fixed-header">
+        <div class="header">
+            <a href="{{ url_for('index') }}"><div class="logo"><img src="static/logo.png" alt="SpectraStitch Logo"/></div></a>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('customize') }}">Customize</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 
-    <!-- Linking the JS file at the bottom for better performance -->
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <section class="video-section">
+        <div class="split">
+            <div class="left">
+                <img src="static/totebag.png" alt="Sample product" class="totebag"/>
+                <img src="static/design_placeholder.png" alt="Sample design" class="sample-totebag"/>
+            </div>
+            <div class="right">
+                <h2>This is</h2>
+                <h1>SpectraStitch</h1>
+            </div>
+        </div>
+        <div class="video-background">
+            <iframe
+                src="https://www.youtube.com/embed/IsQj_RRNZnU?start=80&autoplay=1&controls=0&showinfo=0&mute=1&loop=1&vq=hd1080"
+                frameborder="0"
+                allowfullscreen
+            ></iframe>
+        </div>
+    </section>
+
 </body>
 </html>
