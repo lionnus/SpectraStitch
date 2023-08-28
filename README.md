@@ -25,6 +25,5 @@ To run the Flask app and have a local preview of the project:
 
 ## Usage
 1. Start the server and navigate to http://localhost:5000 in your browser.
-2. Upload an audio file and customize the visual output settings if needed.
-3. Submit to process the audio and generate the visual representation.
-4. View the generated image and tweak the settings dynamically.
+2. Upload an audio file.
+4. View the generated image and tweak the parameters with a real-time preview.
